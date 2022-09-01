@@ -1,1 +1,1 @@
-long listing
+list all
