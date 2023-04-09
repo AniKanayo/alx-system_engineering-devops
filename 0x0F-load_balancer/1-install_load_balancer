@@ -2,20 +2,21 @@
 # configures a new HAproxy as a load balancer
 
 # Install HAproxy on a server
-apt-get -y update
-apt-get -y install haproxy=1.6.\*
+sudo apt-get -y update
+sudo apt-get -y install haproxy
 
 # Configure haproxy configuration file to distribute requests using a roundrobin algorithm
-echo '
-frontend kanayo.tech
+echo "
+frontend http_front
         bind 0:80
-        default_backend web_servers
+        default_backend http_back
 
-backend web_servers
+backend http_back
         balance roundrobin
-        server 151042-web-01 52.86.96.101:80
-        server 151042-web-02 52.72.73.177:80
-' >> /etc/haproxy/haproxy.cfg
+        server 151042-web-01 52.86.96.101:80 check
+        server 151042-web-02 52.72.73.177:80 check
+" >> /etc/haproxy/haproxy.cfg
 
+sudo sed -i 's/ENABLED=0/ENABLED=1/G' /etc/default/haproxy
 # Restart HAproxy service
-service haproxy restart
+sudo service restart haproxy
