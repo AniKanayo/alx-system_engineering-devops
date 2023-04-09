@@ -19,4 +19,4 @@ backend http_back
 
 sudo sed -i 's/ENABLED=0/ENABLED=1/G' /etc/default/haproxy
 # Restart HAproxy service
-sudo service restart haproxy
+sudo service haproxy restart
