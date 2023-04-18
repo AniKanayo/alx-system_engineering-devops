@@ -1,4 +1,4 @@
-# 0x14-mysql
+ql
 
 ![mysql](https://www.simplilearn.com/ice9/free_resources_article_thumb/difference_between_sql_and_mysql.jpg)
 
@@ -63,7 +63,42 @@ mysql-server:
      8.0.19-0ubuntu5 500
         500 http://us-east-1.ec2.archive.ubuntu.com/ubuntu focal/main amd64 Packages
      5.7.40-1ubuntu18.04 500
-        500 http://repo.mysql.com/apt/ubuntu bionic/mysql-5.7 amd64 Packagesval_1, val_2);
+        500 http://repo.mysql.com/apt/ubuntu bionic/mysql-5.7 amd64 Packages
+
+# Now am installing mysql 5.7.*
+$ sudo apt-get install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7* -y
+```
+## Project Task
+
+### Creating a user and Granting Priviledges in mysql
+```mysql
+$ mysql -root -p
+Password:	/* Type root password
+
+mysql> CREATE USER 'holberton_user'@'localhost' IDENTIFIED BY 'projectcorrection280hbtn';
+
+mysql> GRANT GRANT REPLICATION CLIENT ON *.* TO 'holberton_user'@'localhost';
+
+mysql> FLUSH PRIVILEGES;
+```
+
+### Creating Database, Tables and adding Data to the Tables
+
+```mysql
+
+mysql> CREATE DATABASE db_name_;
+
+-- To verify if db is created
+mysql> SHOW DATABASES;
+
+mysql> USE db_name;
+
+mysql> CREATE TABLE table_name (
+    -> col_1 data_type,
+    -> col_2 data_type);
+-- continue adding more coloums to your taste for me i just added two coloumns
+
+mysql> INSERT INTO table_name VALUES (val_1, val_2);
 
 -- Verify if data was added succesfully do
 mysql> SELECT col_1, col_2 FROM tb_name;
@@ -124,7 +159,13 @@ mysql> SHOW MASTER STATUS;
 ```
 _Take note of the binary log and the position, jot it down or you leave this window open and you open another window to continue_
 
-- you then export the db from myql-server to local machine and then copy this db to replica machine
+- you then export the db from myql-server to local machine and then copy this db to replica mach='replication_password',
+    -> MASTER_LOG_FILE='recorded_log_file_name',
+    -> MASTER_LOG_POS=recorded_log_position;
+
+-- Then you start slave
+mysql> START SLAVE;
+```ine
 
 ```bash
 $ mysqldump -uroot -p db_name > export_db_name.sql
@@ -174,46 +215,4 @@ mysql>
 mysql> CHANGE MASTER TO
     -> MASTER_HOST='source_host_name',
     -> MASTER_USER='replication_user_name',
-    -> MASTER_PASSWORD='replication_password',
-    -> MASTER_LOG_FILE='recorded_log_file_name',
-    -> MASTER_LOG_POS=recorded_log_position;
-
--- Then you start slave
-mysql> START SLAVE;
-```
-__That's it you've configured replication on mysql, do reach out for any further assistance__
-
-# Now am installing mysql 5.7.*
-$ sudo apt-get install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7* -y
-```
-## Project Task
-
-### Creating a user and Granting Priviledges in mysql
-```mysql
-$ mysql -root -p
-Password:	/* Type root password
-
-mysql> CREATE USER 'holberton_user'@'localhost' IDENTIFIED BY 'projectcorrection280hbtn';
-
-mysql> GRANT GRANT REPLICATION CLIENT ON *.* TO 'holberton_user'@'localhost';
-
-mysql> FLUSH PRIVILEGES;
-```
-
-### Creating Database, Tables and adding Data to the Tables
-
-```mysql
-
-mysql> CREATE DATABASE db_name_;
-
--- To verify if db is created
-mysql> SHOW DATABASES;
-
-mysql> USE db_name;
-
-mysql> CREATE TABLE table_name (
-    -> col_1 data_type,
-    -> col_2 data_type);
--- continue adding more coloums to your taste for me i just added two coloumns
-
-mysql> INSERT INTO table_name VALUES (
+    -> MASTER_PASSWORD
