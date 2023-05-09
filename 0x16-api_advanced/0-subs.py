@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" python3 -c 'print(__import__("requests").__doc__)'"""
+"""A function to query the Reddit API and returns the no of subscribers"""
 import requests
 
 
