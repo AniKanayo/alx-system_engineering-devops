@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-import requests
 """A function to query the Reddit API and print the titles of... """
+import requests
 
 
 def top_ten(subreddit):
